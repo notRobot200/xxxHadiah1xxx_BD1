@@ -104,10 +104,10 @@ root.geometry("800x350")
 #label1.place(x = 0,y = 0) # show image
 root.resizable(False,False)
 # untuk menambahkan judul // by bayu
-root.title("Your Task is Here")
+root.title("Your Schedule")
 cal = Calendar(root, font = "Consolas", weight = "Bold", selectmode = 'day', locale = 'id_ID', cursor = 'tcross')
 # Change the font from 'Times' to 'Consolas' and change the cursor from 'hand1' to 'tcross' // by Malvin
-cal.grid(row = 1, column = 0, sticky = 'N', rowspan = 7)
+cal.grid(row = 2, column = 0, sticky = 'N', rowspan = 7)
 cal.bind("<<CalendarSelected>>", ListTodo)
 tanggal = str(cal.selection_get())
 treev = ttk.Treeview(root)
