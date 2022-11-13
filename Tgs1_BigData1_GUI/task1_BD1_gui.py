@@ -80,13 +80,20 @@ def AddForm():
     keterangan.grid(row = 2, column = 1, columnspan = 2, rowspan = 4)
     tanggal = str(cal.selection_get())
     tk.Button(win, text = "Tambah", command = lambda: addTodo(win, tanggal, jam, menit, judul, keterangan)).grid(row = 6, columnspan = 3)
-def title():
-    waktu = strftime("%H:%M")
-    tanggal = str(cal.selection_get())
-    root.title(tanggal + " | " + waktu + " | ")
-    root.after(1000, title)
+#def title():
+#  waktu = strftime("%H:%M")
+# tanggal = str(cal.selection_get())
+# root.title(tanggal + " | " + waktu + " | ")
+# root.after(1000, title) // 
 
 root = tk.Tk()
+root.configure(bg="yellow")
+# untuk membuat ukuran canvas // by bayu
+root.geometry("720x350")
+# untuk mengatur agar tidak bisa di ganti-ganti ukuranya, False 1 untuk X, False 2 untuk Y // by bayu
+root.resizable(False,False)
+# untuk menambahkan judul // by bayu
+root.title("Your Task is Here")
 cal = Calendar(root, font = "Comic", weight = "Bold", selectmode = 'day', locale = 'id_ID', cursor = 'hand2')
 # Change the font from 'Times' to 'Comic' and change the cursor from 'hand1' to 'hand2'
 cal.grid(row = 1, column = 0, sticky = 'N', rowspan = 7)
@@ -118,7 +125,7 @@ btnLoad.grid(row = 5, column = 1, sticky = "S")
 btnSave = tk.Button(root, text = "Save", width = 20, bg = "PeachPuff3", fg = "DarkGreen", command = SaveTodos)
 # Change the color from black to dark green
 btnSave.grid(row = 5, column = 2, sticky = "S")
-title()
+#title()
 root.mainloop()
 
 # change font
