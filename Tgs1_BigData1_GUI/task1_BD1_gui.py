@@ -1,5 +1,9 @@
 import tkinter as tk
+# Libary yang pertama berfungsi untuk meng import modul tkinter, 
+# Jadi untuk melihat tampilan yang ada di Libray Tkinter kita harus mengimport modul nya dulu
+# Sedangkan "as" sendiri itu untuk alias/sebutan nama agar mudah buat kita
 from tkinter import ttk
+# Untuk memasukan sebuah widget yang ada di tkinter, agar dia bisa digunakan gituu
 from tkcalendar import Calendar 
 # The tkcalendar module provides 2 classes, the first is DateEntry and the second is Calendar,
 # Here we take the Calendar class which functions to display a calendar widget.
