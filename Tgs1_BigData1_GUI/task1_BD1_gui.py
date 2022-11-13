@@ -22,15 +22,15 @@ def detailTodo(cb = None):
     selectedItem = treev.focus()
     selectedIndex = treev.item(selectedItem)['text']
     selectedTodo = todos[tanggal][selectedIndex]
-    judul = tk.StringVar(value = selectedTodo['Judul'])
-    tk.Label(win, text = "Tanggal:").grid(row = 0, column = 0, sticky = "N")
-    tk.Label(win, text = "{} | {}".format(tanggal, selectedTodo["Waktu"])).grid(row = 0, column = 1, sticky = "E")
-    tk.Label(win, text = "Judul:").grid(row = 1, column = 0, sticky = "N")
+    judul = tk.StringVar(value = selectedTodo['Title'])
+    tk.Label(win, text = "Time: ").grid(row = 0, column = 0, sticky = "N")
+    tk.Label(win, text = "{} | {}".format(tanggal, selectedTodo["Time"])).grid(row = 0, column = 1, sticky = "E")
+    tk.Label(win, text = "Title: ").grid(row = 1, column = 0, sticky = "N")
     tk.Entry(win, state = "disabled", textvariable = judul).grid(row = 1, column = 1, sticky = "E")
-    tk.Label(win, text = "Keterangan:").grid(row = 2, column = 0, sticky = "N")
+    tk.Label(win, text = "Description: ").grid(row = 2, column = 0, sticky = "N")
     keterangan = ScrolledText(win, width = 12, height = 5)
     keterangan.grid(row = 2, column = 1, sticky = "E")
-    keterangan.insert(tk.INSERT, selectedTodo["Keterangan"])
+    keterangan.insert(tk.INSERT, selectedTodo["Description"])
     keterangan.configure(state = "disabled")
 def LoadTodos():
     global todos
@@ -54,13 +54,13 @@ def ListTodo(cb = None):
     tanggal = str(cal.selection_get())
     if tanggal in todos:
         for i in range(len(todos[tanggal])):
-            treev.insert("", "end", text = i, values = (todos[tanggal][i]['Waktu'], todos[tanggal][i]['Judul']))
+            treev.insert("", "end", text = i, values = (todos[tanggal][i]['Time'], todos[tanggal][i]['Title']))
 def addTodo(win, key, jam, menit, judul, keterangan):
     newTodo = {
-        "Waktu":"{}:{}".format(jam.get(), menit.get()),
-        "Judul":judul.get(),
-        "Keterangan": keterangan.get("1.0", tk.END)
-    }
+        "Time":"{}:{}".format(jam.get(), menit.get()),
+        "Title":judul.get(),
+        "Description": keterangan.get("1.0", tk.END)
+    }   #rename "tanggal", "judul", "keterangan" to "time", "title", "description" // by Malvin 
     if key in todos:
         todos[key].append(newTodo)
     else:
@@ -73,16 +73,17 @@ def AddForm():
     jam = tk.IntVar(value = 10)
     menit = tk.IntVar(value = 30)
     judul = tk.StringVar(value = "")
-    tk.Label(win, text = "Waktu:").grid(row = 0, column = 0)
+    tk.Label(win, text = "Time: ").grid(row = 0, column = 0)
     tk.Spinbox(win, from_=0, to = 23, textvariable = jam, width = 3).grid(row = 0, column = 1)
     tk.Spinbox(win, from_=0, to = 59, textvariable = menit, width = 3).grid(row = 0, column = 2)
-    tk.Label(win, text = "Judul:").grid(row = 1, column = 0)
+    tk.Label(win, text = "Title: ").grid(row = 1, column = 0)
     tk.Entry(win, textvariable = judul).grid(row = 1, column = 1, columnspan = 2)
-    tk.Label(win, text = "keterangan:").grid(row = 2, column = 0)
+    tk.Label(win, text = "Description: ").grid(row = 2, column = 0)
     keterangan = ScrolledText(win, width = 20, height = 5)
     keterangan.grid(row = 2, column = 1, columnspan = 2, rowspan = 4)
     tanggal = str(cal.selection_get())
-    tk.Button(win, text = "Tambah", command = lambda: addTodo(win, tanggal, jam, menit, judul, keterangan)).grid(row = 6, columnspan = 3)
+    tk.Button(win, text = "Add", command = lambda: addTodo(win, tanggal, jam, menit, judul, keterangan)).grid(row = 6, columnspan = 3)
+#rename "tanggal", "judul", "keterangan", "tambah" to "time", "title", "description", "add" // by Malvin 
 #def title():
 #  waktu = strftime("%H:%M")
 # tanggal = str(cal.selection_get())
@@ -97,8 +98,8 @@ root.geometry("850x350")
 root.resizable(False,False)
 # untuk menambahkan judul // by bayu
 root.title("Your Task is Here")
-cal = Calendar(root, font = "Comic", weight = "Bold", selectmode = 'day', locale = 'id_ID', cursor = 'hand2')
-# Change the font from 'Times' to 'Comic' and change the cursor from 'hand1' to 'hand2'
+cal = Calendar(root, font = "Consolas", weight = "Bold", selectmode = 'day', locale = 'id_ID', cursor = 'tcross')
+# Change the font from 'Times' to 'Consolas' and change the cursor from 'hand1' to 'tcross' // by Malvin
 cal.grid(row = 1, column = 0, sticky = 'N', rowspan = 7)
 cal.bind("<<CalendarSelected>>", ListTodo)
 tanggal = str(cal.selection_get())
@@ -112,8 +113,9 @@ treev["columns"] = ('1', '2')
 treev["show"] = 'headings'
 treev.column("1", width = 125)
 # Change width from 100 to 125
-treev.heading("1", text = "JAM")
-treev.heading("2", text = 'JUDUL')
+treev.heading("1", text = "TIME")
+treev.heading("2", text = 'TITLE')
+# Change text from 'JAM' to 'TIME', 'JUDUL' to 'TITLE' // by malvin
 btnAdd = tk.Button(root, text = "Add", width = 20, bg = "PeachPuff3", fg = "DarkMagenta", command = AddForm)
 # Change text from 'Tambah' to 'Add'
 # Change the color from black to dark magenta
