@@ -99,9 +99,9 @@ root = tk.Tk()
 # untuk membuat ukuran canvas // by bayu
 root.geometry("800x350")
 # untuk mengatur agar tidak bisa di ganti-ganti ukuranya, False 1 untuk X, False 2 untuk Y // by bayu
-#bg = PhotoImage(file = "nama_file.png") # to load image file
-#label1 = tk.Label( root, image = bg) # show image
-#label1.place(x = 0,y = 0) # show image
+bg = PhotoImage(file = "glow_bag.png") # to load image file
+label1 = tk.Label( root, image = bg) # show image
+label1.place(x = 0,y = 0) # show image
 root.resizable(False,False)
 # untuk menambahkan judul // by bayu
 root.title("Your Schedule")
