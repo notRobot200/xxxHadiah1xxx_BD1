@@ -92,7 +92,7 @@ def AddForm():
 root = tk.Tk()
 root.configure(bg="yellow")
 # untuk membuat ukuran canvas // by bayu
-root.geometry("720x350")
+root.geometry("850x350")
 # untuk mengatur agar tidak bisa di ganti-ganti ukuranya, False 1 untuk X, False 2 untuk Y // by bayu
 root.resizable(False,False)
 # untuk menambahkan judul // by bayu
