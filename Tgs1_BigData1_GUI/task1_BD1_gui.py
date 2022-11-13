@@ -11,6 +11,9 @@ from tkinter.scrolledtext import ScrolledText
 # The tkinter module contains a module called scrolledtext.py and it contains a class called ScrolledText,
 # The ScrolledText class functions to display the scroll bar widget vertically.
 from time import strftime
+# strftime atau string from time adalah modul untuk menjalankan fungsi yang berhubungan dengan waktu, 
+# metode waktu strftime() mengonversi tuple atau struct_time.
+
 todos = {}
 
 def detailTodo(cb = None):
