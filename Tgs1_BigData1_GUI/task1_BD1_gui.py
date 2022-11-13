@@ -13,25 +13,27 @@ from tkinter.scrolledtext import ScrolledText
 from time import strftime
 # strftime atau string from time adalah modul untuk menjalankan fungsi yang berhubungan dengan waktu, 
 # metode waktu strftime() mengonversi tuple atau struct_time.
+from tkinter import *
 
 todos = {}
 
 def detailTodo(cb = None):
     win = tk.Toplevel()
-    win.wm_title("Detail Kegiatan")
+    win.wm_title("Description Details") # change text from 'Detail Keterangan' to 'Description Details'
     selectedItem = treev.focus()
     selectedIndex = treev.item(selectedItem)['text']
     selectedTodo = todos[tanggal][selectedIndex]
     judul = tk.StringVar(value = selectedTodo['Title'])
-    tk.Label(win, text = "Time: ").grid(row = 0, column = 0, sticky = "N")
+    tk.Label(win, text = "Time: ").grid(row = 0, column = 0, sticky = "N") # change text from 'Waktu' to 'Time' 
     tk.Label(win, text = "{} | {}".format(tanggal, selectedTodo["Time"])).grid(row = 0, column = 1, sticky = "E")
-    tk.Label(win, text = "Title: ").grid(row = 1, column = 0, sticky = "N")
+    tk.Label(win, text = "Title: ").grid(row = 1, column = 0, sticky = "N") # change text from 'Judul' to 'Title'
     tk.Entry(win, state = "disabled", textvariable = judul).grid(row = 1, column = 1, sticky = "E")
-    tk.Label(win, text = "Description: ").grid(row = 2, column = 0, sticky = "N")
+    tk.Label(win, text = "Description: ").grid(row = 2, column = 0, sticky = "N") # change text from 'Keterangan' to 'Description'
     keterangan = ScrolledText(win, width = 12, height = 5)
     keterangan.grid(row = 2, column = 1, sticky = "E")
     keterangan.insert(tk.INSERT, selectedTodo["Description"])
     keterangan.configure(state = "disabled")
+
 def LoadTodos():
     global todos
     f = open('kegiatanku.dat', 'r') # rename file from 'mytodo.dat' to 'kegiatanku.dat'
@@ -39,22 +41,27 @@ def LoadTodos():
     f.close()
     todos = eval(data)
     ListTodo()
+
 def SaveTodos():
     f = open('kegiatanku.dat', 'w') # rename file from 'mytodo.dat' to 'kegiatanku.dat'
     f.write(str(todos))
     f.close()
+
 def delTodo():
     tanggal = str(cal.selection_get())
     selectedItem = treev.focus()
     todos[tanggal].pop(treev.item(selectedItem)['text'])
     ListTodo()
+
 def ListTodo(cb = None):
     for i in treev.get_children():
         treev.delete(i)
     tanggal = str(cal.selection_get())
     if tanggal in todos:
         for i in range(len(todos[tanggal])):
-            treev.insert("", "end", text = i, values = (todos[tanggal][i]['Time'], todos[tanggal][i]['Title']))
+            treev.insert("", "end", text = i, values = (todos[tanggal][i]['Time'], todos[tanggal][i]['Title'], todos[tanggal][i]['Description']))
+# add Description to ListTodo
+
 def addTodo(win, key, jam, menit, judul, keterangan):
     newTodo = {
         "Time":"{}:{}".format(jam.get(), menit.get()),
@@ -67,6 +74,7 @@ def addTodo(win, key, jam, menit, judul, keterangan):
         todos[key] = [newTodo]
     win.destroy()
     ListTodo()
+
 def AddForm():
     win = tk.Toplevel()
     win.wm_title("+")
@@ -84,17 +92,16 @@ def AddForm():
     tanggal = str(cal.selection_get())
     tk.Button(win, text = "Add", command = lambda: addTodo(win, tanggal, jam, menit, judul, keterangan)).grid(row = 6, columnspan = 3)
 #rename "tanggal", "judul", "keterangan", "tambah" to "time", "title", "description", "add" // by Malvin 
-#def title():
-#  waktu = strftime("%H:%M")
-# tanggal = str(cal.selection_get())
-# root.title(tanggal + " | " + waktu + " | ")
-# root.after(1000, title) // 
+
+
 
 root = tk.Tk()
-root.configure(bg="yellow")
 # untuk membuat ukuran canvas // by bayu
 root.geometry("850x350")
 # untuk mengatur agar tidak bisa di ganti-ganti ukuranya, False 1 untuk X, False 2 untuk Y // by bayu
+# bg = PhotoImage(file = "nama_file.png") # to load image file
+# label1 = tk.Label( root, image = bg) # show image
+# label1.place(x = 0,y = 0) # show image
 root.resizable(False,False)
 # untuk menambahkan judul // by bayu
 root.title("Your Task is Here")
@@ -109,12 +116,13 @@ scrollBar = tk.Scrollbar(root, orient = "vertical", command = treev.yview)
 scrollBar.grid(row = 0, column = 3, sticky = "ENS", rowspan = 4)
 treev.configure(yscrollcommand=scrollBar.set)
 treev.bind("<Double-1>", detailTodo)
-treev["columns"] = ('1', '2')
+treev["columns"] = ('1', '2', '3') # add column 3
 treev["show"] = 'headings'
-treev.column("1", width = 125)
-# Change width from 100 to 125
+treev.column("1", width = 80)
+# Change width from 100 to 80
 treev.heading("1", text = "TIME")
 treev.heading("2", text = 'TITLE')
+treev.heading("3", text = 'DESCRIPTION') # add column 3 'DESCRIPTION'
 # Change text from 'JAM' to 'TIME', 'JUDUL' to 'TITLE' // by malvin
 btnAdd = tk.Button(root, text = "Add", width = 20, bg = "PeachPuff3", fg = "DarkMagenta", command = AddForm)
 # Change text from 'Tambah' to 'Add'
@@ -130,12 +138,4 @@ btnLoad.grid(row = 5, column = 1, sticky = "S")
 btnSave = tk.Button(root, text = "Save", width = 20, bg = "PeachPuff3", fg = "DarkGreen", command = SaveTodos)
 # Change the color from black to dark green
 btnSave.grid(row = 5, column = 2, sticky = "S")
-#title()
 root.mainloop()
-
-# change font
-# change cursor
-# change color
-# change width
-# change text
-# change name file .dat
